@@ -1,3 +1,6 @@
 .tinyb
 .DS_Store
 .diff_tmp
+.e
+.tinyenv
+node_modules

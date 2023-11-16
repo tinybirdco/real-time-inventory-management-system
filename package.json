@@ -1,0 +1,22 @@
+{
+  "name": "real-time-inventory-management-system",
+  "version": "1.0.0",
+  "description": "This repo contains an ecommerce demo tho show a very basic[^1] example of real time personalization using Tinybird to ingest data, transform it, and publish endpoints.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "preinstall": "./configure.sh",
+    "seed": "node data-generator/tinybird-events/index.js",
+    "seed_web_events": "node data-generator/tinybird-events/web_events.js",
+    "seed_products": "node data-generator/tinybird-events/seed_products.js",
+    "seed_inventory": "node data-generator/tinybird-events/seed_products.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "yargs": "^17.7.2"
+  }
+}
