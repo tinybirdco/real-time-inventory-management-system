@@ -34,12 +34,16 @@
           values: [
             'view',
             'cart',
-            'sale'
+            'checkout',
+            'sale',
+            'fail',
           ],
           weights: [
             60,
             33,
-            24
+            24,
+            10,
+            5,
           ]
         }
       ]
