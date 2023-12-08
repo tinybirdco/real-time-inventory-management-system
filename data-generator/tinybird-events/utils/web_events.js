@@ -1,5 +1,3 @@
-import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
 import { send_data_to_tinybird, read_tinyb_config } from "./tinybird.js";
 import { productsList } from "./products.js";
 import { faker } from '@faker-js/faker';
@@ -27,7 +25,7 @@ function generateMessage(eventType, product) {
 // Send a batch of messages to Tinybird
 async function sendBatch(token, batch) {
     const batchString = batch.map(event => JSON.stringify(event)).join('\n');
-    await send_data_to_tinybird('web_events', token, batchString);
+    await send_data_to_tinybird('ecomm_events', token, batchString);
 }
 
 // Calculate and log the uploading rate
@@ -132,13 +130,13 @@ export const generateWebEventData = async (token, sample, repeat, batchSize, pro
 
 // const main = async () => {
 //     try {
-//         const token = await read_tinyb_config(argv.config);
+//         const token = await read_tinyb_config("./.tinyb");
 //         console.log("Sending initial inventory data to Tinybird");
 //         await generateInventoryData(token, productsList);
 //         console.log("Inventory seeding complete");
 
 //         console.log("Sending web events to Tinybird");
-//         await generateWebEventData(token, argv.sample, argv.repeat, argv.batchSize, productsList);
+//         await generateWebEventData(token, 1000, 1, 3000, productsList);
 //         console.log("Web events seeding complete")
 //     } catch (error) {
 //         console.error(error);

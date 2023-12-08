@@ -1,22 +1,23 @@
 {
-  "name": "real-time-inventory-management-system",
-  "version": "1.0.0",
-  "description": "This repo contains an ecommerce demo tho show a very basic[^1] example of real time personalization using Tinybird to ingest data, transform it, and publish endpoints.",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "preinstall": "./configure.sh",
-    "seed_init": "node data-generator/tinybird-events/index.js --init",
-    "seed_web_events": "node data-generator/tinybird-events/index.js --seedWebEvents",
-    "seed_products": "node data-generator/tinybird-events/index.js --seedProducts",
-    "seed_inventory": "node data-generator/tinybird-events/index.js --seedInventory",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@faker-js/faker": "^8.3.1",
-    "yargs": "^17.7.2"
-  }
+    "name": "real-time-inventory-management-system",
+    "version": "1.0.0",
+    "description": "This repo contains an ecommerce demo to show a very basic example of real time inventory management using Tinybird to ingest data, transform it, and publish endpoints.",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "preinstall": "./configure.sh",
+        "seed": "node data-generator/tinybird-events/index.js --init",
+        "seed_web_events": "node data-generator/tinybird-events/index.js --seedWebEvents",
+        "seed_products": "node data-generator/tinybird-events/index.js --seedProducts",
+        "seed_inventory": "node data-generator/tinybird-events/index.js --seedInventory",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Tinybird",
+    "license": "ISC",
+    "devDependencies": {
+        "@faker-js/faker": "^8.3.1",
+        "chart.js": "^4.4.1",
+        "yargs": "^17.7.2"
+    }
 }

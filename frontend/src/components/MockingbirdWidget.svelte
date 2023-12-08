@@ -6,7 +6,7 @@
 
   /** @type {import('@tinybirdco/mockingbird').Schema} */
   const schema = {
-    timestamp: {
+    datetime: {
       type: 'mockingbird.timestampNow'
     },
     product: {
