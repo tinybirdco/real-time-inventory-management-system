@@ -1,8 +1,8 @@
-NODE events_by_hour
+NODE events_by_min
 SQL >
 
     SELECT
-        toStartOfHour(datetime) AS ts,
+        toStartOfMinute(datetime) AS ts,
         product,
         countState() AS n_events,
         countIfState(event = 'view') AS n_views,
@@ -12,8 +12,5 @@ SQL >
     GROUP BY
         ts,
         product
-
-TYPE materialized
-DATASOURCE events_by_hour_mv
 
 

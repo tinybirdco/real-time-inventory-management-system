@@ -8,14 +8,12 @@ SQL >
         countIfState(event = 'view') AS n_views,
         countIfState(event = 'cart') AS n_carts,
         countIfState(event = 'sale') AS n_sales
-    FROM web_events
+    FROM ecomm_events
     GROUP BY
         ts,
         product
 
 TYPE materialized
 DATASOURCE events_by_day_mv
-ENGINE "AggregatingMergeTree"
-ENGINE_PARTITION_KEY "toYYYYMM(ts)"
-ENGINE_SORTING_KEY "ts, product"
+
 

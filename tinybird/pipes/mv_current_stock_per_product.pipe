@@ -1,0 +1,30 @@
+NODE sum
+DESCRIPTION >
+    undefined
+
+SQL >
+
+    SELECT 
+        product,
+        sum(amount) as total_inventory
+    FROM 
+        inventory
+    GROUP BY 
+        product
+
+
+
+NODE mv
+SQL >
+
+    SELECT p.id, p.category, p.name, p.price, SUM(i.amount) as total_inventory
+    FROM inventory i
+    JOIN products p ON i.product = p.id
+    WHERE i.datetime <= (SELECT MAX(datetime) FROM inventory)
+    GROUP BY p.category, p.id, p.name, p.photo, p.price
+
+TYPE materialized
+DATASOURCE product_inventory_mv
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY "name, price, total_inventory"
+

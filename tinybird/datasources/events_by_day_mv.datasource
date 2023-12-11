@@ -1,4 +1,4 @@
-# Data Source created from Pipe 'events_by_day_mat'
+# Data Source created from Pipe 'mv_events_by_day_mat'
 
 SCHEMA >
     `ts` DateTime,

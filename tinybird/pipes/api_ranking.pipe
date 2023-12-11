@@ -1,0 +1,43 @@
+TOKEN "api_ranking_endpoint_read_9683" READ
+
+NODE filter
+SQL >
+
+    %
+    SELECT *
+    FROM products
+    WHERE
+        1
+        {% if defined(id_param) %} and id = {{ String(id_param) }} {% end %}
+        {% if defined(category) and category != "all" %}
+            and category = {{ String(category) }}
+        {% end %}
+
+
+
+NODE hits
+SQL >
+
+    %
+    SELECT product, count() AS total
+    FROM ecomm_events
+    WHERE
+        product IN (SELECT id from filter)
+        {% if defined(ranking) and ranking == "views" %} and event = 'view'
+        {% elif defined(ranking) and ranking == "carts" %} and event = 'cart'
+        {% else %} and event = 'sale'
+    --     {% end %} AND toDateTime(datetime) > now() - interval 7 hour
+    GROUP BY product
+    ORDER BY total DESC
+
+
+
+NODE endpoint
+SQL >
+
+    SELECT p.id id, p.name name, p.photo photo, h.total total, p.price price
+    FROM filter p
+    left join hits h on p.id = h.product
+    order by total desc
+
+

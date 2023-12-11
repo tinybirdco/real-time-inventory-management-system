@@ -13,7 +13,4 @@ SQL >
         ts,
         product
 
-TYPE materialized
-DATASOURCE events_by_hour_mv
-
 

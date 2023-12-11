@@ -1,0 +1,10 @@
+
+SCHEMA >
+    `category` String `json:$.category`,
+    `id` String `json:$.id`,
+    `name` String `json:$.name`,
+    `photo` String `json:$.photo`,
+    `price` Int16 `json:$.price`
+
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY "category, name, photo, price"

@@ -8,7 +8,7 @@ SQL >
         countIfState(event = 'view') AS n_views,
         countIfState(event = 'cart') AS n_carts,
         countIfState(event = 'sale') AS n_sales
-    FROM web_events
+    FROM ecomm_events
     GROUP BY
         ts,
         product

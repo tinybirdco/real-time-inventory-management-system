@@ -1,0 +1,76 @@
+TOKEN "api_stock_ranking_endpoint_read_9202" READ
+
+NODE filter_prods
+SQL >
+
+    %
+    SELECT *
+    FROM products
+    WHERE
+        1
+        {% if defined(category) and category != "all" %}
+            AND category = {{ String(category) }}
+        {% end %}
+
+
+
+NODE latest_stock
+SQL >
+
+    SELECT
+        product_inventory_mv.id as product,
+        sum(total_inventory) AS stock,
+        CASE
+            WHEN stock > 100  -- in stock
+            THEN 0
+            WHEN stock > 0  -- almost out
+            THEN 1
+            ELSE 2 END AS stock_status  -- out of stock
+            FROM product_inventory_mv
+            WHERE product IN (SELECT id FROM filter_prods)
+            GROUP BY product
+
+
+
+NODE web_events_hits
+SQL >
+
+    SELECT product, - count() AS hits
+    FROM ecomm_events
+    WHERE
+        ecomm_events.datetime >= now() - interval 48 hour
+        AND product IN (SELECT id FROM filter_prods)
+        AND event = 'sale'
+    GROUP BY product
+
+
+
+NODE endpoint
+SQL >
+
+    %
+    SELECT
+        ls.product AS id,
+        name,
+        stock,
+        stock_status,
+        hits,
+        CASE
+            WHEN
+                stock_status < 2
+                AND ROW_NUMBER() OVER (ORDER BY stock_status, hits DESC) <= 3
+            THEN 'Trending 🔥' END AS rank_status, photo, price
+            FROM latest_stock ls
+            LEFT JOIN web_events_hits eh on ls.product = eh.product
+            JOIN filter_prods fp ON ls.product = fp.id
+            WHERE
+                1
+                {% if defined(show_oos) and show_oos == '1' %} AND stock_status <= 2
+                {% else %} AND stock_status < 2
+                {% end %}
+            {% if defined(ranking) and ranking == '1' %}
+                ORDER BY stock_status, hits DESC
+    {% else %} ORDER BY price DESC
+    {% end %}
+
+

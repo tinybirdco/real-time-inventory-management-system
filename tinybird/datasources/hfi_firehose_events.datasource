@@ -1,8 +1,0 @@
-
-SCHEMA >
-    `records__data` Array(String) `json:$.records[:].data`,
-    `requestId` String `json:$.requestId`,
-    `timestamp` Int64 `json:$.timestamp`
-
-ENGINE "MergeTree"
-ENGINE_SORTING_KEY "records__data, requestId, timestamp"

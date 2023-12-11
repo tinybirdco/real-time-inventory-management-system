@@ -11,5 +11,4 @@ SQL >
     WHERE event = 'sale'
     GROUP BY product
 
-TYPE materialized
-DATASOURCE mv_latest_availability
+

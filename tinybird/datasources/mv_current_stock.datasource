@@ -1,0 +1,11 @@
+# Data Source created from Pipe 'mv_current_stock_per_product'
+
+SCHEMA >
+    `p.id` String,
+    `category` String,
+    `name` String,
+    `price` Int16,
+    `total_inventory` Int64
+
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY "name, price, total_inventory"

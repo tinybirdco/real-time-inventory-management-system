@@ -1,0 +1,39 @@
+TOKEN "api_views_carts_trend_endpoint_read_7617" READ
+
+NODE filter_prods
+SQL >
+
+    %
+    SELECT *
+    FROM products
+    WHERE
+        1
+        {% if defined(prod_id) and prod_id != "All" %}
+            AND id = {{ String(prod_id) }}
+        {% end %}
+        {% if defined(category) and category != "all" %}
+            and category = {{ String(category) }}
+        {% end %}
+
+
+
+NODE endpoint
+SQL >
+
+    %
+    {% set hrs = UInt16(hours_param) %}
+    SELECT ts, countIfMerge(n_views) n_views, countIfMerge(n_carts) n_carts
+    FROM
+        {% if hrs > 24 %} events_by_day_mv
+        {% elif hrs > 3 %} events_by_hour_mv
+        {% else %} events_by_min_mv
+        {% end %}
+    WHERE
+        ts
+        >= now()
+        - interval {{ UInt16(hours_param, description="Hours to go back", default=2400) }} hour
+        AND product IN (SELECT id FROM filter_prods)
+    GROUP BY ts
+    ORDER BY ts
+
+

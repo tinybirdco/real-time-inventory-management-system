@@ -1,9 +1,9 @@
 
 SCHEMA >
+    `amount` Int16 `json:$.amount`,
     `datetime` DateTime `json:$.datetime`,
-    `event` String `json:$.event`,
     `product` String `json:$.product`
 
 ENGINE "MergeTree"
 ENGINE_PARTITION_KEY "toYear(datetime)"
-ENGINE_SORTING_KEY "datetime, event, product"
+ENGINE_SORTING_KEY "datetime, amount, product"
