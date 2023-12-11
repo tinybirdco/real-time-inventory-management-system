@@ -14,7 +14,6 @@
   }
 
   :global(body) {
-    background-color: rgb(255, 137, 116);
     font-family: 'Montserrat', sans-serif;
   }
 

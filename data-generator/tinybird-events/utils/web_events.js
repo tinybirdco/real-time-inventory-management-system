@@ -88,8 +88,8 @@ export const generateInventoryData = async (token, products) => {
     products.forEach(async (product) => {
         const inventoryUpdate = {
             datetime: formatDate(true),
-            amount: faker.number.int({ min: 5000, max: 10000 }),
-            id: product.id,
+            amount: faker.number.int({ min: 5000, max: 20000 }),
+            product: product.id,
         };
         console.log(`Sending inventory data to Tinybird: ${product.name}`)
         await send_data_to_tinybird('inventory', token, JSON.stringify(inventoryUpdate));

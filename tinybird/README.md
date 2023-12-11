@@ -1,7 +1,5 @@
 # Data Project
 
-Data project based on this other one [https://github.com/tinybirdco/demo-ux-person](https://github.com/tinybirdco/demo-ux-person) so feel free to check that one.
-
 ## Working with the Tinybird CLI
 
 To start working with data projects as if they were software projects, let's install the Tinybird CLI in a virtual environment.

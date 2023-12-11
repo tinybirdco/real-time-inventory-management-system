@@ -47,7 +47,7 @@ const argv = yargs(hideBin(process.argv))
         alias: 'b',
         describe: 'Size of each batch for web event data generation',
         type: 'number',
-        default: 300
+        default: 500
     })
     .option('config', {
         alias: 'c',
