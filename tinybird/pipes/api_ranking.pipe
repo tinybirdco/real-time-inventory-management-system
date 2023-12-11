@@ -1,6 +1,14 @@
 TOKEN "api_ranking_endpoint_read_9683" READ
 
 NODE filter
+DESCRIPTION >
+    This query selects all fields from the 'products' table. It includes optional conditions based on whether certain parameters are defined:
+
+    If id_param is defined, it filters the results to include only the product with the matching ID.
+    If category is defined and not equal to "all", it filters the results to include products from the specified category.
+
+    The query is constructed to be flexible, allowing for the inclusion of these conditions based on the parameters provided.
+
 SQL >
 
     %
@@ -16,6 +24,9 @@ SQL >
 
 
 NODE hits
+DESCRIPTION >
+    This query counts e-commerce events for each product filtered by a specific event type ('view', 'cart', or 'sale', depending on the 'ranking' variable) from a filtered list of products, grouping the results by product and ordering them in descending order of event count.
+
 SQL >
 
     %
@@ -26,7 +37,7 @@ SQL >
         {% if defined(ranking) and ranking == "views" %} and event = 'view'
         {% elif defined(ranking) and ranking == "carts" %} and event = 'cart'
         {% else %} and event = 'sale'
-    --     {% end %} AND toDateTime(datetime) > now() - interval 7 hour
+        {% end %} AND toDateTime(datetime) > now() - interval 7 hour
     GROUP BY product
     ORDER BY total DESC
 

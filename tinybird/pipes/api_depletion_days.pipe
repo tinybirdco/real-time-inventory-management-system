@@ -1,0 +1,42 @@
+TOKEN "api_depletion_days_endpoint_read_2233" READ
+
+NODE daily_sales
+SQL >
+
+    SELECT product, toDate(datetime) AS sale_date, count() AS units_sold
+    FROM ecomm_events
+    WHERE event = 'sale'
+    GROUP BY product, sale_date
+
+
+
+NODE average_consumption
+SQL >
+
+    SELECT product, avg(units_sold) AS avg_daily_consumption
+    FROM daily_sales
+    GROUP BY product
+
+
+
+NODE endpoint
+SQL >
+
+    SELECT
+        inv.product,
+        addDays(
+            toDate(now()),
+            intDivOrZero(
+                inv.available_stock,
+                if(
+                    avgCons.avg_daily_consumption = 0,
+                    1,
+                    avgCons.avg_daily_consumption
+                )
+            )
+        ) AS depletion_date
+    FROM mv_latest_inventory inv
+    LEFT JOIN average_consumption avgCons ON inv.product = avgCons.product
+    ORDER BY depletion_date ASC
+
+

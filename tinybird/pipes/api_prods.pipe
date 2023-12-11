@@ -1,6 +1,14 @@
 TOKEN "api_prods_endpoint_read_2917" READ
 
 NODE filter_prods
+DESCRIPTION >
+    This query selects all fields from the 'products' table. It includes optional conditions based on whether certain parameters are defined:
+
+    If id_param is defined, it filters the results to include only the product with the matching ID.
+    If category is defined and not equal to "all", it filters the results to include products from the specified category.
+
+    The query is constructed to be flexible, allowing for the inclusion of these conditions based on the parameters provided.
+
 SQL >
 
     %
@@ -18,6 +26,9 @@ SQL >
 
 
 NODE endpoint
+DESCRIPTION >
+    This query dynamically selects from one of three materialized views (events_by_day_mv, events_by_hour_mv, events_by_min_mv) based on the number of hours specified in hrs. It then joins with the 'filter_prods' table to filter products and calculates the count of sales, views, and carts for each product within a time window defined by hours_param. The results are grouped by product name and price, and ordered in descending order based on a specified key performance indicator (KPI) which can be sales, carts, or views. The choice of the materialized view and the KPI for sorting is determined by the parameters hrs and kpi_ranking, respectively.
+
 SQL >
 
     %

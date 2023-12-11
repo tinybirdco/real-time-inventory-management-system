@@ -60,28 +60,12 @@ async function createUserSession(products, token) {
 
             // Update inventory on successful sale
             if (saleEvent === 'sale') {
-                const inventoryUpdates = cart.map(productInCart => {
-                    const amount = faker.number.int({ min: -5, max: -1 });
-                    return updateInventory(productInCart, amount, token);
-                });
-
-                // Wait for all inventory updates to complete
-                await Promise.all(inventoryUpdates);
+                sessionEvents.push(generateMessage(saleEvent, product));
             }
         }
     }
 
     return sessionEvents
-}
-
-// Function to simulate inventory update
-async function updateInventory(product, amount, token) {
-    const inventoryUpdate = {
-        datetime: formatDate(true),
-        amount,
-        product: product,
-    };
-    return await send_data_to_tinybird('inventory', token, JSON.stringify(inventoryUpdate));
 }
 
 export const generateInventoryData = async (token, products) => {

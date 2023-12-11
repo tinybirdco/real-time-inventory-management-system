@@ -1,0 +1,8 @@
+# Data Source created from Pipe 'mv_ecomm_stock_sum'
+
+SCHEMA >
+    `product` String,
+    `available_stock` SimpleAggregateFunction(sum, Int64)
+
+ENGINE "AggregatingMergeTree"
+ENGINE_SORTING_KEY "product"

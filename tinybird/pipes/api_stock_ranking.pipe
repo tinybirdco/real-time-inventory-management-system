@@ -1,6 +1,18 @@
+DESCRIPTION >
+	Current stock of products; Top products by view, cart or sale from web events enriched with product dimensions
+
+
 TOKEN "api_stock_ranking_endpoint_read_9202" READ
 
 NODE filter_prods
+DESCRIPTION >
+    This query selects all fields from the 'products' table. It includes optional conditions based on whether certain parameters are defined:
+
+    If id_param is defined, it filters the results to include only the product with the matching ID.
+    If category is defined and not equal to "all", it filters the results to include products from the specified category.
+
+    The query is constructed to be flexible, allowing for the inclusion of these conditions based on the parameters provided.
+
 SQL >
 
     %
@@ -15,27 +27,32 @@ SQL >
 
 
 NODE latest_stock
+DESCRIPTION >
+    This query selects the product IDs and their total inventory from a materialized view (product_inventory_mv), and categorizes each product as 'in stock' (0), 'almost out' (1), or 'out of stock' (2) based on the inventory quantity. It only includes products that are listed in the filter_prods table.
+
 SQL >
 
     SELECT
-        product_inventory_mv.id as product,
-        sum(total_inventory) AS stock,
+        DISTINCT product,
+        sum(available_stock) AS stock,
         CASE
-            WHEN stock > 100  -- in stock
-            THEN 0
-            WHEN stock > 0  -- almost out
-            THEN 1
-            ELSE 2 END AS stock_status  -- out of stock
-            FROM product_inventory_mv
-            WHERE product IN (SELECT id FROM filter_prods)
-            GROUP BY product
+            WHEN stock > 100 THEN 0 --in stock
+            WHEN stock > 0 THEN 1 --almost out
+            ELSE 2 --out of stock
+            END AS stock_status
+    FROM mv_latest_inventory
+    WHERE product IN (SELECT id FROM filter_prods)
+    GROUP BY product
 
 
 
-NODE web_events_hits
+NODE ecomm_events_hits
+DESCRIPTION >
+    This query counts the number of sales ('hits') for each product in the last 48 hours from the 'ecomm_events' table, but the count is presented as a negative value. It only includes products listed in the 'filter_prods' table and specifically looks for events labeled as 'sale'.
+
 SQL >
 
-    SELECT product, - count() AS hits
+    SELECT DISTINCT product, - count() AS hits
     FROM ecomm_events
     WHERE
         ecomm_events.datetime >= now() - interval 48 hour
@@ -46,11 +63,14 @@ SQL >
 
 
 NODE endpoint
+DESCRIPTION >
+    This SQL query selects product details and assigns a 'Trending 🔥' rank status to the top three products with stock_status less than 2, sorted by stock_status and descending hits, with additional conditional logic for out-of-stock products and ordering based on user-defined parameters.
+
 SQL >
 
     %
     SELECT
-        ls.product AS id,
+        DISTINCT ls.product AS id,
         name,
         stock,
         stock_status,
@@ -61,7 +81,7 @@ SQL >
                 AND ROW_NUMBER() OVER (ORDER BY stock_status, hits DESC) <= 3
             THEN 'Trending 🔥' END AS rank_status, photo, price
             FROM latest_stock ls
-            LEFT JOIN web_events_hits eh on ls.product = eh.product
+            LEFT JOIN ecomm_events_hits eh on ls.product = eh.product
             JOIN filter_prods fp ON ls.product = fp.id
             WHERE
                 1
@@ -72,5 +92,18 @@ SQL >
                 ORDER BY stock_status, hits DESC
     {% else %} ORDER BY price DESC
     {% end %}
+
+
+
+NODE api_stock_ranking_4
+SQL >
+
+        SELECT
+            product_inventory_mv.id AS product,
+            SUM(total_inventory) AS stock
+        FROM product_inventory_mv
+        WHERE product IN (SELECT id FROM filter_prods)
+        GROUP BY product
+    
 
 

@@ -1,0 +1,15 @@
+NODE mv
+SQL >
+
+    SELECT
+        product,
+        sumSimpleState(-1) AS available_stock
+    FROM ecomm_events
+    WHERE event = 'sale'
+    GROUP BY product
+
+TYPE materialized
+DATASOURCE mv_latest_inventory
+ENGINE "AggregatingMergeTree"
+ENGINE_SORTING_KEY "product"
+

@@ -1,0 +1,19 @@
+DESCRIPTION >
+	This SQL query calculates the total available stock and its total holding cost for each product by joining the inventory and products tables, assuming a 5% annual holding cost rate applied daily.
+
+
+NODE endpoint
+SQL >
+
+    SELECT 
+        inv.product,
+        prod.price,
+        SUM(inv.available_stock) AS total_available_stock,
+        ((prod.price * 0.05) / 365) AS daily_holding_cost_per_unit, -- Assuming 5% as the HCR
+        SUM(inv.available_stock) * ((prod.price * 0.05) / 365) AS total_holding_cost
+    FROM mv_latest_inventory inv
+    JOIN products prod ON inv.product = prod.id
+    GROUP BY inv.product, prod.price
+
+
+

@@ -1,3 +1,7 @@
+DESCRIPTION >
+	This query provides summary of e-commerce events (total events, views, cart additions, and sales) for each product, grouped by the start of each day and product ID by minute.
+
+
 NODE events_by_min
 SQL >
 

@@ -1,0 +1,42 @@
+DESCRIPTION >
+	This measures how quickly your inventory is sold and replenished. A high turnover rate indicates efficient inventory management. Be sure to group the final result by the product.
+
+
+TOKEN "api_inventory_turnover_rate_endpoint_read_2233" READ
+
+NODE total_sales_volume_per_product
+SQL >
+
+    SELECT 
+        product,
+        count() AS total_sales_volume
+    FROM ecomm_events
+    WHERE event = 'sale'
+    GROUP BY product
+
+
+
+NODE current_inventory_level
+SQL >
+
+    SELECT 
+        product,
+        SUM(available_stock) AS available_stock
+    FROM mv_latest_inventory
+    GROUP BY product
+
+
+
+NODE endpoint
+SQL >
+
+    SELECT 
+        ts.product,
+        IF(mvi.available_stock = 0, 0, ts.total_sales_volume / mvi.available_stock) AS inventory_turnover_rate
+    FROM 
+        total_sales_volume_per_product as ts
+    JOIN 
+        current_inventory_level mvi ON ts.product = mvi.product
+
+
+

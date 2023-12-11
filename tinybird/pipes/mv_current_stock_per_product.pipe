@@ -1,4 +1,8 @@
-NODE sum
+DESCRIPTION >
+	This materialized view joins the 'inventory' and 'products' tables to calculate the total inventory for each product, considering only inventory records up to the most recent datetime in the inventory table. It groups the results by product details (category, ID, name, photo, price), displaying each product's ID, category, name, price, and total inventory amount.
+
+
+NODE mv
 DESCRIPTION >
     undefined
 
@@ -6,25 +10,13 @@ SQL >
 
     SELECT 
         product,
-        sum(amount) as total_inventory
+        sumSimpleState(amount) AS available_stock
     FROM 
         inventory
     GROUP BY 
         product
 
-
-
-NODE mv
-SQL >
-
-    SELECT p.id, p.category, p.name, p.price, SUM(i.amount) as total_inventory
-    FROM inventory i
-    JOIN products p ON i.product = p.id
-    WHERE i.datetime <= (SELECT MAX(datetime) FROM inventory)
-    GROUP BY p.category, p.id, p.name, p.photo, p.price
-
 TYPE materialized
-DATASOURCE product_inventory_mv
-ENGINE "MergeTree"
-ENGINE_SORTING_KEY "name, price, total_inventory"
+DATASOURCE mv_latest_inventory
+
 
