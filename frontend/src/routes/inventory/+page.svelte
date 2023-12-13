@@ -22,12 +22,9 @@
 
       <Hr classHr="my-8" />
 
-      <Span
-        class="flex bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800"
-      >
+      <Span class="text-xs font-medium inline-flex px-2.5 py-0.5 ">
         <TotalSalesPerDay />
-        <TotalSalesPerDay />
-        <TotalSalesPerDay />
+
       </Span>
 
       <Hr classHr="my-8" />
@@ -40,22 +37,8 @@
 </div>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
   :global(*) {
     margin: 0;
     padding: 0;
-  }
-
-  :global(body) {
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  main {
-    /* max-width: 800px;
-    min-height: 100vh;
-    margin: 0 auto;
-    padding: 0 20px;
-    background-color: rgb(245, 245, 245); */
   }
 </style>

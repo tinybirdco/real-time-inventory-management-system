@@ -98,7 +98,9 @@ npm run dev
 
 ## Data
 
-The data used in this demo is stored in the `data` directory.
+The data used in this demo is stored in the `data-generator` directory.
+
+The data is generated using a Javascript script that uses the Faker library to generate fake data for this demo. The script is run using the `npm run seed` command.
 
 ### License
 

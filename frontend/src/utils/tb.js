@@ -17,7 +17,6 @@ export async function sendEvents(events, dsName, dsAppendToken) {
 }
 
 export async function getTinybirdData(endpoint) {
-    console.log('getT')
     const token = import.meta.env.VITE_TB_READ_TOKEN;
     const host = import.meta.env.VITE_TB_HOST;
 
