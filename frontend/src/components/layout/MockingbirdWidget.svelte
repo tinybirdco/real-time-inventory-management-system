@@ -1,6 +1,6 @@
 <script>
   import { createTooltip } from '@melt-ui/svelte';
-  import { createWorker, startWorker, stopWorker } from '../lib/workerBuilder';
+  import { createWorker, startWorker, stopWorker } from '../../lib/workerBuilder';
   import { Pause, Play } from 'lucide-svelte';
   import { fade } from 'svelte/transition';
 
@@ -31,20 +31,8 @@
       type: 'mockingbird.pickWeighted',
       params: [
         {
-          values: [
-            'view',
-            'cart',
-            'checkout',
-            'sale',
-            'fail',
-          ],
-          weights: [
-            60,
-            33,
-            24,
-            10,
-            5,
-          ]
+          values: ['view', 'cart', 'checkout', 'sale', 'fail'],
+          weights: [60, 33, 24, 10, 5]
         }
       ]
     }

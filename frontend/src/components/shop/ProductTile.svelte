@@ -1,5 +1,5 @@
 <script>
-  import { sendEvents } from '../utils/tb.js';
+  import { sendEvents } from '../../utils/tb.js';
   const tbAppendToken = import.meta.env.VITE_TB_APPEND_TOKEN;
   export let product;
   export let priority = 'lazy';
@@ -7,7 +7,7 @@
   import { createTooltip, melt } from '@melt-ui/svelte';
   import { fade } from 'svelte/transition';
   import { CreditCard } from 'lucide-svelte';
-  import { StockStatus } from '../utils/filters.js';
+  import { StockStatus } from '../../utils/filters.js';
 
   let buyedCount = 0;
   const {

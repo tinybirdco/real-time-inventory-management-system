@@ -17,7 +17,9 @@ export async function load({ fetch, url }) {
     const res = await response.json();
 
     if (response.ok) {
-        return res.data
+        return {
+            products: res.data
+        };
     } else {
         throw new Error(res);
     }

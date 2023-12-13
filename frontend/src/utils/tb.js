@@ -17,40 +17,20 @@ export async function sendEvents(events, dsName, dsAppendToken) {
 }
 
 export async function getTinybirdData(endpoint) {
-    // const token = import.meta.env.VITE_TB_READ_TOKEN;
-    // const host = import.meta.env.VITE_TB_HOST;
-
-    // const url = `https://${host}/pipes/${endpoint}.json` // you may be on a different host
-    // console.log(url)
-    // const response = await fetch(url, {
-    //     headers: {
-    //         Authorization: `Bearer ${token}`
-    //     }
-    // })
-
-    // console.log(response)
-    // const res = await response.json();
-
-    // if (response.ok) {
-    //     return res.data;
-    // } else {
-    //     throw new Error(res);
-    // }
-
-    // let url = new URL(`https://api.tinybird.co/v0/pipes/api_stock_ranking.json`)
-
+    console.log('getT')
     const token = import.meta.env.VITE_TB_READ_TOKEN;
     const host = import.meta.env.VITE_TB_HOST;
 
-    const url = `https://${host}/v0/pipes/${endpoint}.json` // you may be on a different host
+    const url = `https://${host}/v0/pipes/${endpoint}.json`
 
     const response = await fetch(url, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     })
-    console.log(response)
+
     const res = await response.json();
+    console.log(res)
 
     if (response.ok) {
         return res.data;

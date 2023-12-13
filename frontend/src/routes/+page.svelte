@@ -1,8 +1,8 @@
 <script>
   import { page } from '$app/stores';
-  import ProductTile from '../components/ProductTile.svelte';
-  import Header from '../components/Header.svelte';
-  import Footer from '../components/Footer.svelte';
+  import ProductTile from '../components/shop/ProductTile.svelte';
+  import Header from '../components/layout/Header.svelte';
+  import Footer from '../components/layout/Footer.svelte';
 
   import { Category, Stock, Ranking } from '../utils/filters';
 
