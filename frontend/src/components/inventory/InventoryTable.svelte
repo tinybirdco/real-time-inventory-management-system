@@ -26,10 +26,8 @@
   };
 
   onMount(async () => {
-    console.log('onMount');
     try {
       inventory = await getTinybirdData('api_stock_ranking');
-      console.log(inventory);
     } catch (err) {
       error = err.message;
     } finally {

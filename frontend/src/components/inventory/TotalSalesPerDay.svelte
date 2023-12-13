@@ -1,6 +1,19 @@
 <script>
+  import { onMount } from 'svelte';
+  import { getTinybirdData } from '../../utils/tb.js';
   import { Chart, Card, A, Button, Dropdown, DropdownItem } from 'flowbite-svelte';
   import { ArrowUpSolid, ChevronDownSolid, ChevronRightSolid } from 'flowbite-svelte-icons';
+
+  onMount(async () => {
+    try {
+      totalSalesPerDay = await getTinybirdData('api_total_sales_per_day');
+      console.log(totalSalesPerDay);
+    } catch (err) {
+      error = err.message;
+    } finally {
+      loading = false;
+    }
+  });
 
   const options = {
     series: [
@@ -31,7 +44,7 @@
     },
     plotOptions: {
       bar: {
-        horizontal: true,
+        horizontal: false,
         columnWidth: '100%',
         borderRadiusApplication: 'end',
         borderRadius: 6,

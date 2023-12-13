@@ -4,13 +4,13 @@
 
 # Real-time inventory management demo
 
-This repo contains an ecommerce demo to show a very basic example of real time inventory management using Tinybird to ingest data, transform it, and publish endpoints. The demo is built using Svelte and Tailwind CSS.
+This repo contains an eCommerce demo to show a very basic example of real-time inventory management using Tinybird to ingest data, transform it, and publish endpoints. The demo is built using Svelte and Tailwind CSS.
 
-It is deliberatedly simple to be quickly showable in a demo.
+It is deliberately simple to be quickly showable in a demo.
 
 You can visit the deployed apps here:
 
-- [Svelte ecommerce](https://ecommerce-svelte-rho.vercel.app/)
+- [Real-time inventory management demo](https://ecommerce-svelte-rho.vercel.app/)
 
 ## Requirements
 
@@ -19,18 +19,20 @@ You can visit the deployed apps here:
 
 ## Getting Started
 
+### Data
+
 1. Setup your Tinybird account
 
 Click this button to deploy the data project to Tinybird 👇
 
-[![Deploy to Tinybird](https://cdn.tinybird.co/button)](https://ui.tinybird.co/workspaces/new?name=signatures_poc)
+[![Deploy to Tinybird](https://cdn.tinybird.co/button)](https://ui.tinybird.co/workspaces/new?name=real_time_inventory_management_system)
 
 Follow the guided process, and your Tinybird workspace is now ready to start receiving events.
 
 2. Setup this repository locally
 
 ```bash
-git clone https://github.com/tinybirdco/signatures-POC.git
+git clone https://github.com/tinybirdco/real-time-inventory-management-system
 cd signatures-POC
 ```
 
@@ -62,17 +64,37 @@ npm run seed
 
 Go to your [Tinybird workspace](https://ui.tinybird.co) and check the data is flowing.
 
-6. Copy the environment variables to .env
+### Frontend
 
-Locally, be sure to paste the admin token from Step 3 into the `.env` file.
+Once you have your backend setup, and you have data from the data generator, you can start the front end.
 
-7. Run the Dashboard locally
+1. Go to the `frontend` directory
+
+```bash
+cd frontend
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Create the .env file
+
+```bash
+cp .env.example .env
+```
+
+Then be sure to paste the admin token from Step 3 into the `.env` file.
+
+4. Run the app locally
 
 ```bash
 npm run dev
 ```
 
-8. Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
+5. Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
 
 ## Data
 
@@ -94,7 +116,7 @@ We welcome contributions from the community! If you'd like to contribute to this
 
 ## Feedback and Support
 
-If you have any questions, feedback, or need support, please [open an issue](https://github.com/tinybirdco/real-time-inventory-management-system/issues/new).
+If you have any questions, feed back, or need support, please [open an issue](https://github.com/tinybirdco/real-time-inventory-management-system/issues/new).
 
 ### Need help?
 

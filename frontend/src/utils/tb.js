@@ -30,7 +30,6 @@ export async function getTinybirdData(endpoint) {
     })
 
     const res = await response.json();
-    console.log(res)
 
     if (response.ok) {
         return res.data;

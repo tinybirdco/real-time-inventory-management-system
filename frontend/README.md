@@ -2,7 +2,7 @@
 
 ## Create the .env file
 
-In this folder, `/ecommerce-svelte/demo-ecomm-svelte`, create a .env file with the following structure:
+In this folder, create a `.env`` file with the following structure:
 
 ```bash
 VITE_TB_READ_TOKEN=<Your ranking_read_token>
@@ -33,10 +33,28 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
-## User guide
+### License
 
-Check the /about page to see the steps to ingest data from the Data Generator.
+This project is licensed under the MIT License.
 
-## Roadmap
+## Contributors
 
-Check the /todo page to see some improvement ideas. Feel free to contribute.
+We welcome contributions from the community! If you'd like to contribute to this project, please follow these steps:
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature-name`
+3. Make your changes and commit them: `git commit -am 'Add your feature'`
+4. Push the changes to your branch: `git push origin feature/your-feature-name`
+5. Open a pull request on GitHub
+
+## Feedback and Support
+
+If you have any questions, feedback, or need support, please [open an issue](https://github.com/tinybirdco/real-time-inventory-management-system/issues/new).
+
+### Need help?
+
+&bull; [Community Slack](https://www.tinybird.co/join-our-slack-community) &bull; [Tinybird Docs](https://docs.tinybird.co/) &bull;
+
+## Authors
+
+- [Joe Karlsson](https://github.com/joekarlsson)
