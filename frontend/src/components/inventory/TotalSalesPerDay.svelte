@@ -1,21 +1,28 @@
 <script>
   import { onMount } from 'svelte';
-  import { getTinybirdData } from '../../utils/tb.js';
   import { Chart, Card, A, Button, Dropdown, DropdownItem, Spinner } from 'flowbite-svelte';
   import { ArrowUpSolid, ChevronDownSolid, ChevronRightSolid } from 'flowbite-svelte-icons';
+  import { getTinybirdData } from '../../utils/tb.js';
+  //   import { LoadingChart } from './LoadingChart.svelte';
 
   let error = '';
   let loading = true;
   let totalSalesPerDay = [];
   let dates = [];
   let salesValues = [];
+  let sumSalesValues = 0;
   let options;
 
-  onMount(async () => {
+  async function fetchData(days) {
     try {
-      totalSalesPerDay = await getTinybirdData('api_total_sales_per_day');
+      totalSalesPerDay = await getTinybirdData('api_total_sales_per_day', { days: days });
       dates = totalSalesPerDay.map((item) => item.sale_date.slice(5));
       salesValues = totalSalesPerDay.map((item) => item.total_sales_value);
+      sumSalesValues = salesValues
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        .toLocaleString();
+
+      console.log(sumSalesValues, 'salesValues');
 
       options = {
         series: [
@@ -105,7 +112,39 @@
     } finally {
       loading = false;
     }
+  }
+
+  onMount(async () => {
+    await fetchData(7); // Fetch data for the default view (last 7 days)
   });
+
+  function handleDropdownClick(item) {
+    let days;
+    switch (item) {
+      case 'Yesterday':
+        days = 2;
+        break;
+      case 'Today':
+        days = 1; // Adjust as needed
+        break;
+      case 'Last 7 days':
+        days = 7;
+        break;
+      case 'Last 30 days':
+        days = 30;
+        break;
+      case 'Last 90 days':
+        days = 90;
+        break;
+      case 'All time':
+        days = 100;
+        break;
+      default:
+        days = 7; // Default value or error handling
+        break;
+    }
+    fetchData(days); // Fetch data based on the selected item
+  }
 </script>
 
 <div>
@@ -117,10 +156,10 @@
     <Card>
       <div class="flex justify-between">
         <dl>
-          <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">
-            Total Sales Per Day
-          </dt>
-          <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">$5,405</dd>
+          <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Total Sales</dt>
+          <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">
+            {sumSalesValues}
+          </dd>
         </dl>
         <div>
           <span
@@ -154,12 +193,20 @@
             >Last 7 days<ChevronDownSolid class="w-2.5 m-2.5 ms-1.5" /></Button
           >
           <Dropdown class="w-40" offset="-6">
-            <DropdownItem>Yesterday</DropdownItem>
-            <DropdownItem>Today</DropdownItem>
-            <DropdownItem>Last 7 days</DropdownItem>
-            <DropdownItem>Last 30 days</DropdownItem>
-            <DropdownItem>Last 90 days</DropdownItem>
+            <DropdownItem on:click={() => handleDropdownClick('Yesterday')}>Yesterday</DropdownItem>
+            <DropdownItem on:click={() => handleDropdownClick('Today')}>Today</DropdownItem>
+            <DropdownItem on:click={() => handleDropdownClick('Last 7 days')}
+              >Last 7 days</DropdownItem
+            >
+            <DropdownItem on:click={() => handleDropdownClick('Last 30 days')}
+              >Last 30 days</DropdownItem
+            >
+            <DropdownItem on:click={() => handleDropdownClick('Last 90 days')}
+              >Last 90 days</DropdownItem
+            >
+            <DropdownItem on:click={() => handleDropdownClick('All time')}>All time</DropdownItem>
           </Dropdown>
+
           <A
             href="/"
             class="uppercase text-sm font-semibold hover:text-primary-700 dark:hover:text-primary-500 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2 hover:no-underline"
