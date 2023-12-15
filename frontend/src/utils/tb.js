@@ -16,11 +16,20 @@ export async function sendEvents(events, dsName, dsAppendToken) {
     console.log(content);
 }
 
-export async function getTinybirdData(endpoint) {
+export async function getTinybirdData(endpoint, params = {}) {
     const token = import.meta.env.VITE_TB_READ_TOKEN;
     const host = import.meta.env.VITE_TB_HOST;
 
-    const url = `https://${host}/v0/pipes/${endpoint}.json`
+    // const url = `https://${host}/v0/pipes/${endpoint}.json`
+
+    let url = new URL(`https://${host}/v0/pipes/${endpoint}.json`)
+
+    // Looping through the keys in the params object and adding them to the URL
+    for (const key in params) {
+        if (params.hasOwnProperty(key)) {
+            url.searchParams.append(key, params[key]);
+        }
+    }
 
     const response = await fetch(url, {
         headers: {
