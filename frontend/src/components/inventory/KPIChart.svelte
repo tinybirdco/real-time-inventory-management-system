@@ -12,6 +12,7 @@
     Spinner
   } from 'flowbite-svelte';
   import {
+    ArrowUpSolid,
     InfoCircleSolid,
     ArrowDownToBraketSolid,
     ChevronDownSolid,
@@ -27,13 +28,14 @@
   let cart_value = 0;
   let conversion_rate = 0;
   let revenue = 0;
+  let dropdownLabel = 'Last 7 days';
 
   async function fetchData(hours) {
     try {
-      console.log(hours, 'hours');
       kpiData = await getTinybirdData('api_kpis', { hours_param: hours });
       cart_value = kpiData[0].cart_value;
-      conversion_rate = kpiData[0].revenue;
+      conversion_rate = kpiData[0].conversion_rate.toFixed(1);
+      console.log(conversion_rate, 'conversion_rate');
       revenue = kpiData[0].revenue;
       const total_views = kpiData[0].total_views;
       const total_carts = kpiData[0].total_carts;
@@ -136,24 +138,31 @@
     switch (item) {
       case 'Yesterday':
         hoursParam = 48;
+        dropdownLabel = 'Yesterday';
         break;
       case 'Today':
-        hoursParam = 24; // Adjust as needed
+        hoursParam = 24;
+        dropdownLabel = 'Today';
         break;
       case 'Last 7 days':
         hoursParam = 168;
+        dropdownLabel = 'Last 7 days';
         break;
       case 'Last 30 days':
         hoursParam = 720;
+        dropdownLabel = 'Last 30 days';
         break;
       case 'Last 90 days':
         hoursParam = 2160;
+        dropdownLabel = 'Last 90 days';
         break;
       case 'All time':
         hoursParam = 10000;
+        dropdownLabel = 'All time';
         break;
       default:
         hoursParam = 168; // Default value or error handling
+        dropdownLabel = 'Last 7 days';
         break;
     }
     fetchData(hoursParam); // Fetch data based on the selected item
@@ -168,11 +177,19 @@
   {:else}
     <Card>
       <div class="flex justify-between items-start w-full">
+        <div class="grid grid-cols-2 py-3">
+          <dl>
+            <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">
+              Conversion rate:
+            </dt>
+            <dd class="leading-none text-xl font-bold text-green-500 dark:text-green-400">
+              {conversion_rate}%
+            </dd>
+          </dl>
+        </div>
+
         <div class="flex-col items-center">
           <div class="flex items-center mb-1">
-            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white me-1">
-              Tinyshop KPIs
-            </h5>
             <InfoCircleSolid
               id="donut1"
               class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
@@ -213,7 +230,7 @@
         <div class="flex justify-between items-center pt-5">
           <Button
             class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white bg-transparent hover:bg-transparent dark:bg-transparent dark:hover:bg-transparent focus:ring-transparent dark:focus:ring-transparent py-0"
-            >Last 7 days<ChevronDownSolid class="w-2.5 m-2.5 ms-1.5" /></Button
+            >{dropdownLabel}<ChevronDownSolid class="w-2.5 m-2.5 ms-1.5" /></Button
           >
           <Dropdown class="w-40" offset="-6">
             <DropdownItem on:click={() => handleDropdownClick('Yesterday')}>Yesterday</DropdownItem>
@@ -234,7 +251,7 @@
             href="/"
             class="uppercase text-sm font-semibold hover:text-primary-700 dark:hover:text-primary-500 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2 hover:no-underline"
           >
-            Traffic analysis
+            Revenue analysis
             <ChevronRightSolid class="w-2.5 h-2.5 ms-1.5" />
           </A>
         </div>
