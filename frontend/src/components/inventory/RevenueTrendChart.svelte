@@ -6,28 +6,41 @@
 
   let error = '';
   let loading = true;
-  let totalSalesPerDay = [];
+  let revenueTrendData = [];
   let dates = [];
-  let salesValues = [];
-  let sumSalesValues = 0;
+  let revenue = [];
+  let cartValue = [];
+  let sumCartValue = 0;
+  let sumRevenue = 0;
   let dropdownLabel = 'Last 7 days';
   let options;
 
   async function fetchData(days) {
     try {
-      totalSalesPerDay = await getTinybirdData('api_total_sales_per_day', { days: days });
-      dates = totalSalesPerDay.map((item) => item.sale_date.slice(5));
-      salesValues = totalSalesPerDay.map((item) => item.total_sales_value);
-      sumSalesValues = salesValues
+      revenueTrendData = await getTinybirdData('api_rev_trend', { days_param: days });
+      cartValue = revenueTrendData.map((item) => item.cart_value);
+      revenue = revenueTrendData.map((item) => item.revenue);
+      dates = revenueTrendData.map((item) => item.ts);
+      sumCartValue = cartValue
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
         .toLocaleString();
+      sumRevenue = revenue
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        .toLocaleString();
+
+      console.log(revenueTrendData);
 
       options = {
         series: [
           {
-            name: 'Sales',
-            data: salesValues,
+            name: 'Cart Value',
+            data: cartValue,
             color: '#31C48D'
+          },
+          {
+            name: 'Revenue',
+            data: revenue,
+            color: '#FDBA8C'
           }
         ],
 
@@ -35,7 +48,7 @@
           sparkline: {
             enabled: false
           },
-          type: 'bar',
+          type: 'area',
           width: '100%',
           height: 400,
           toolbar: {
@@ -161,29 +174,27 @@
     <Card class="flex-1 mx-4">
       <div class="flex justify-between">
         <dl>
-          <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Total Sales</dt>
+          <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Revenue Trend</dt>
           <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">
-            {sumSalesValues}
+            ${sumCartValue}
           </dd>
         </dl>
-        <div>
-          <span
-            class="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-green-900 dark:text-green-300"
-          >
-            <ArrowUpSolid class="w-2.5 h-2.5 me-1.5" />
-            Profit rate 23.5%
-          </span>
-        </div>
       </div>
 
       <div class="grid grid-cols-2 py-3">
         <dl>
-          <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Income</dt>
-          <dd class="leading-none text-xl font-bold text-green-500 dark:text-green-400">$23,635</dd>
+          <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Total Revenue</dt>
+          <dd class="leading-none text-xl font-bold text-green-500 dark:text-green-400">
+            ${sumRevenue}
+          </dd>
         </dl>
         <dl>
-          <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Expense</dt>
-          <dd class="leading-none text-xl font-bold text-red-600 dark:text-red-500">-$18,230</dd>
+          <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">
+            Total Cart Value
+          </dt>
+          <dd class="leading-none text-xl font-bold text-red-600 dark:text-red-500">
+            ${sumCartValue}
+          </dd>
         </dl>
       </div>
 

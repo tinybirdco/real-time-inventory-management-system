@@ -8,11 +8,9 @@
     Dropdown,
     DropdownItem,
     Popover,
-    Tooltip,
-    Spinner
+    Tooltip
   } from 'flowbite-svelte';
   import {
-    ArrowUpSolid,
     InfoCircleSolid,
     ArrowDownToBraketSolid,
     ChevronDownSolid,
@@ -35,7 +33,6 @@
       kpiData = await getTinybirdData('api_kpis', { hours_param: hours });
       cart_value = kpiData[0].cart_value;
       conversion_rate = kpiData[0].conversion_rate.toFixed(1);
-      console.log(conversion_rate, 'conversion_rate');
       revenue = kpiData[0].revenue;
       const total_views = kpiData[0].total_views;
       const total_carts = kpiData[0].total_carts;
@@ -175,8 +172,8 @@
   {:else if error}
     <p>Error: {error}</p>
   {:else}
-    <Card>
-      <div class="flex justify-between items-start w-full">
+    <Card class="mx-4">
+      <div class="justify-between items-start w-full flex-1">
         <div class="grid grid-cols-2 py-3">
           <dl>
             <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">

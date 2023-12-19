@@ -12,17 +12,6 @@
         </a>
         to rebalance stock.
       </div>
-        <div class="mt-2 lg:text-2xl">
-        Visit the
-        <a
-            href="/ecommerce_analytics"
-            class="mt-4 font-bold no-underline text-white hover:underline lg:text-2xl"
-            target="_blank"
-        >
-            eCommerce Analytics App
-        </a>
-        to rebalance stock.
-    </div>
       <div class="mt-2 lg:text-2xl">
         View the
         <a
