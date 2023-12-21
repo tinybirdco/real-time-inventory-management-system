@@ -49,7 +49,7 @@
             enabled: false
           },
           type: 'area',
-          width: '100%',
+          //   width: '100%',
           height: 400,
           toolbar: {
             show: false
@@ -61,7 +61,7 @@
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '100%',
+            // columnWidth: '100%',
             borderRadiusApplication: 'end',
             borderRadius: 6,
             dataLabels: {
@@ -171,7 +171,7 @@
   {:else if error}
     <p>Error: {error}</p>
   {:else}
-    <Card class="flex-1 mx-4">
+    <Card class="flex-1 mx-4" size="xl">
       <div class="flex justify-between">
         <dl>
           <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Revenue Trend</dt>
@@ -224,7 +224,7 @@
           </Dropdown>
 
           <A
-            href="/"
+            href="/#"
             class="uppercase text-sm font-semibold hover:text-primary-700 dark:hover:text-primary-500 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2 hover:no-underline"
           >
             Sales Report

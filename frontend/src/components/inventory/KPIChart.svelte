@@ -43,7 +43,6 @@
         colors: ['#1C64F2', '#16BDCA', '#FDBA8C', '#E74694'],
         chart: {
           height: 400,
-          width: '100%',
           type: 'donut'
         },
         stroke: {
@@ -172,7 +171,7 @@
   {:else if error}
     <p>Error: {error}</p>
   {:else}
-    <Card class="mx-4">
+    <Card class="mx-4" size="xl">
       <div class="justify-between items-start w-full flex-1">
         <div class="grid grid-cols-2 py-3">
           <dl>
@@ -245,7 +244,7 @@
           </Dropdown>
 
           <A
-            href="/"
+            href="/#"
             class="uppercase text-sm font-semibold hover:text-primary-700 dark:hover:text-primary-500 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2 hover:no-underline"
           >
             Revenue analysis

@@ -24,11 +24,20 @@
 
       <Hr classHr="my-8" />
 
-      <Span class="text-xs font-medium inline-flex px-2.5 py-0.5 ">
-        <TotalSalesPerDay />
-        <KPIChart />
+      <div class="flex flex-col md:flex-row">
+        <div class="md:w-1/2">
+          <TotalSalesPerDay />
+        </div>
+        <div class="my-8 md:my-0 md:mx-8 md:w-1/2">
+          <KPIChart />
+        </div>
+      </div>
+
+      <Hr classHr="my-8" />
+
+      <div>
         <RevenueTrendChart />
-      </Span>
+      </div>
 
       <Hr classHr="my-8" />
 

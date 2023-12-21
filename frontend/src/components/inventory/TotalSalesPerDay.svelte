@@ -36,7 +36,6 @@
             enabled: false
           },
           type: 'bar',
-          width: '100%',
           height: 400,
           toolbar: {
             show: false
@@ -48,7 +47,7 @@
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '100%',
+
             borderRadiusApplication: 'end',
             borderRadius: 6,
             dataLabels: {
@@ -158,7 +157,7 @@
   {:else if error}
     <p>Error: {error}</p>
   {:else}
-    <Card class="flex-1 mx-4">
+    <Card class="flex-1 mx-4" size="m">
       <div class="flex justify-between">
         <dl>
           <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Total Sales</dt>
